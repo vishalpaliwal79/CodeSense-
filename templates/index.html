@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeSense - ML Code Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand">CodeSense App</div>
+        <div class="nav-controls" id="navControls">
+            <button id="showLoginBtn" class="nav-btn">Login</button>
+            <button id="showSignupBtn" class="nav-btn primary-btn">Sign Up</button>
+            <span id="userGreeting" class="hidden nav-greeting"></span>
+            <button id="showHistoryBtn" class="nav-btn hidden">History</button>
+            <button id="logoutBtn" class="nav-btn primary-btn hidden">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" id="closeAuthModal">&times;</span>
+            <h2 id="authTitle">Login</h2>
+            <div id="authError" class="hidden error-alert modal-alert"></div>
+            <div class="input-group-col">
+                <input type="text" id="usernameInput" placeholder="Username" autocomplete="off">
+                <input type="password" id="passwordInput" placeholder="Password">
+                <button id="authSubmitBtn" class="full-width-btn">Submit</button>
+            </div>
+            <p class="auth-switch" id="authSwitchText">Don't have an account? <span id="authSwitchLink" class="text-link">Sign Up</span></p>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="historyModal" class="modal hidden">
+        <div class="modal-content wide-modal">
+            <span class="close-btn" id="closeHistoryModal">&times;</span>
+            <h2>Query History</h2>
+            <div id="historyListContainer" class="history-list">
+                <!-- History items injected here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container main-container">
+        <header>
+            <h1>CodeSense</h1>
+            <p>ML-Based Code Category Predictor with Architecture Visualization</p>
+        </header>
+
+        <section class="input-section">
+            <div class="input-group">
+                <input type="text" id="problemStatement" placeholder="E.g., login system, custom shopping cart..." autocomplete="off">
+                <button id="predictBtn">Predict Architecture</button>
+            </div>
+            <p class="hint">Try phrases like: "authentication api", "crud operations", or "ecommerce cart"</p>
+        </section>
+
+        <!-- Loading spinner -->
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Analyzing problem statement...</p>
+        </div>
+        
+        <!-- Error message -->
+        <div id="errorMessage" class="hidden error-alert"></div>
+
+        <!-- Result section -->
+        <section id="resultSection" class="hidden fade-in">
+            <div class="result-card">
+                <div class="badges-container">
+                    <div class="category-badge">
+                        <span class="label">Predicted Category:</span>
+                        <span class="value" id="categoryValue">Auth</span>
+                    </div>
+                    <div class="category-badge arch-badge">
+                        <span class="label">Recommended Architecture:</span>
+                        <span class="value" id="architectureValue">Microservices</span>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="panel">
+                        <h3>Explanation</h3>
+                        <p id="explanationValue">Explanation text here...</p>
+                        
+                        <h3>Code Template</h3>
+                        <div class="code-container">
+                            <pre><code id="codeValue">code here</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="panel">
+                        <h3>Architecture Diagram</h3>
+                        <div class="diagram-container">
+                            <div id="mermaidDiagram" class="mermaid">
+                                <!-- Mermaid diagram will be rendered here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='mermaid.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
